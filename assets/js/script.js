@@ -34,8 +34,10 @@ var displyWeatherData = function(){
 
 var getCityLatLon = function(){
     //get the city latitude nad longitude from the city name
-    lat = Geolocation.
-    return {lat, lon};
+    var lat = 0;//get latitude here
+    var lon = 0;//get longitude here
+    var coord = {lat,lon};
+    return coord;
 }
 
 var displayCitySearchHistory = function() {
