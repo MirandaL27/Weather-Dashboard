@@ -55,3 +55,9 @@ main{
     display: flex;
 
 }
+
+hr{
+    border: 3px solid black;
+    background-color:black;
+    margin-top: 15px;
+}
