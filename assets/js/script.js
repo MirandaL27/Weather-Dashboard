@@ -38,8 +38,13 @@ var getCityLatLon = function(){
     return {lat, lon};
 }
 
+var displayCitySearchHistory = function() {
+    //make html elements to display the list of cities in the search history
+}
+
 var addCityToSearchHistory = function(){
     //adds city name to list of searches.
+
 }
 
 formEl.addEventListener("submit", function(event){
