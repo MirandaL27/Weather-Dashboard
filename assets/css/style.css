@@ -1,0 +1,13 @@
+body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.header-container{
+    background-image: linear-gradient(blue, turquoise);
+    text-align: center;
+    color: white;
+}
+h1 {
+    padding: 10px;
+}
+

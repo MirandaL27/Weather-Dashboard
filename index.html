@@ -8,11 +8,30 @@
     <title>Weather Dashboard</title>
 </head>
 <body>
+    <!--Header Secction-->
     <header>
-        <h1>Weather Dashboard</h1>
+        <div class="header-container">
+            <h1>Weather Dashboard</h1>
+        </div>
     </header>
+   
+    <main>
+         <!--Form Section-->
+        <section class="form-container">
+            <h2 class="search-header" >Search For a City:</h2>
+            <form class=weather-form>
+                <label for="city"></label>
+                <input type="text" id="city" name="city" class="city"/>
 
+                <button type="submit" class="search-btn">Search</button>
+            </form>
+        </section>
+        <!--Weather Section-->
+        <section class="weather-container">
 
+        </section>
+    </main>
+    
     <script src = "./assets/js/script.js"></script>
 </body>
 </html>
