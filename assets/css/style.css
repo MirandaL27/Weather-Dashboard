@@ -78,5 +78,7 @@ hr{
 
 .other-five-days{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    width: 93%;
+    margin: 15px;
 }

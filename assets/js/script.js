@@ -121,9 +121,30 @@ var displyWeatherData = function(){
         var childDivEl = document.createElement("div");
         childDivEl.style.backgroundColor = "blue";
         childDivEl.style.color = "white";
+        childDivEl.style.padding = "10px";
+        childDivEl.style.width = "15%";
+        childDivEl.style.border = "3px solid black";
+        childDivEl.style.borderRadius = "10px";
         var h3El = document.createElement("h3");
         h3El.textContent = days[i].date;
         childDivEl.appendChild(h3El);
+
+        varIconUrl = "http://openweathermap.org/img/wn/" + days[i].icon + "@2x.png";
+        var imgEl = document.createElement("img");
+        imgEl.src = varIconUrl;
+        childDivEl.appendChild(imgEl);
+
+        var tempEl = document.createElement("p");
+        tempEl.textContent = "Temp: "+days[i].temp + "\xB0F";
+        childDivEl.appendChild(tempEl)
+
+        var windEl = document.createElement("p");
+        windEl.textContent = "Wind: " + days[i].temp + " MPH";
+        childDivEl.appendChild(windEl);
+
+        var humidityEl = document.createElement("p");
+        humidityEl.textContent = "Humidity: " + days[i].humidity + " %";
+        childDivEl.appendChild(humidityEl);
 
         divEl.appendChild(childDivEl);
     }
