@@ -3,7 +3,7 @@
 //http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit=1&appid=50f3b7bbc39633c0695f5b6b710ca954
 //need a search history where the cities are clickable and show current weather data
 //need to generate html elements for the weather for the next five days.
-
+var searchHistoryContainerEl = document.querySelector(".search-history-container");
 var formEl = document.querySelector(".weather-form")
 //records search history
 var searchHistory = [];
@@ -176,18 +176,35 @@ var getCityLatLon = function(cityName){
 
 var displayCitySearchHistory = function() {
     //make html elements to display the list of cities in the search history
+    var divs = document.querySelector(".search-history-container div");
+    console.log(divs);
+    if(divs){
+        //remove old search history
+    }
+    //put new search history in
+    for(var i = 0;i = searchHistory.length; i++){
+        var buttonEl = document.createElement("button");
+        buttonEl.textContent = searchHistory[i];
+    }
 }
 
-var addCityToSearchHistory = function(){
+var addCityToSearchHistory = function(city){
     //adds city name to list of searches.
-
+    searchHistory.push(city);
+    displayCitySearchHistory();
 }
 
 formEl.addEventListener("submit", function(event){
     event.preventDefault();
     var inputEl = document.querySelector("#city");
     getCityLatLon(inputEl.value);
+    addCityToSearchHistory(inputEl.value);
 });
+
+searchHistoryContainerEl.addEventListener("click",function(){
+    console.log("search history button clicked");
+})
+
 
 //need to add an event listener for if a city in the search history is clicked.
 
