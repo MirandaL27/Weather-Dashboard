@@ -1,9 +1,5 @@
-
-//https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=hourly,minutely,current,alerts&appid=50f3b7bbc39633c0695f5b6b710ca954
-//http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit=1&appid=50f3b7bbc39633c0695f5b6b710ca954
-//need a search history where the cities are clickable and show current weather data
-//need to generate html elements for the weather for the next five days.
 var searchHistoryContainerEl = document.querySelector(".search-history-container");
+var weatherContainerEl = document.querySelector(".weather-container");
 var formEl = document.querySelector(".weather-form")
 //records search history
 var searchHistory = [];
@@ -26,6 +22,8 @@ var days = [];
 
 var getWeatherData = function(lat, lon, city){
     //the fetch request goes here! puts data into weather object.
+    //clear days array first
+    days.length = 0;
     var weatherUrl = "https://api.openweathermap.org/data/2.5/onecall?lat="+lat +"&lon=" +lon+ "&units=imperial"+"&exclude=hourly,minutely,current,alerts&appid=50f3b7bbc39633c0695f5b6b710ca954";
     fetch(weatherUrl)
     .then(function(response){
@@ -75,7 +73,13 @@ var getUIVBackgroundColor = function(severity){
     }
 }
 var displayToday = function(){
+
     var divEl = document.querySelector(".today");
+    divEl.remove();
+
+    divEl=document.createElement("div");
+    divEl.className ="today";
+
     divEl.style.display = "block";
     var h2El = document.createElement("h2");
     h2El.textContent = days[0].cityName + " (" + days[0].date + ")";
@@ -108,16 +112,21 @@ var displayToday = function(){
     uviSpan.style.borderRadius = "10px";
     uviEl.appendChild(uviSpan);
     divEl.appendChild(uviEl);
+    weatherContainerEl.appendChild(divEl);
 }
 
 var displyWeatherData = function(){
     //takes the data from the weather array and makes html elements to display it 
     //make first day
     displayToday();
+    var divEl = document.querySelector(".other-five-days");
+        divEl.remove();
 
+    divEl=document.createElement("div");
+    divEl.className ="other-five-days";
     for(var i = 1; i<6;i++){
         //makes the other five days
-        var divEl = document.querySelector(".other-five-days");
+        
         var childDivEl = document.createElement("div");
         childDivEl.style.backgroundColor = "blue";
         childDivEl.style.color = "white";
@@ -147,7 +156,29 @@ var displyWeatherData = function(){
         childDivEl.appendChild(humidityEl);
 
         divEl.appendChild(childDivEl);
+        
     }
+    weatherContainerEl.appendChild(divEl);
+}
+
+var noDataToDisplay = function(){
+    var divEl = document.querySelector(".today");
+    divEl.remove();
+
+    divEl=document.createElement("div");
+    divEl.className ="today";
+    divEl.textContent = "No Data Found."
+
+    divEl.style.display = "block";
+    weatherContainerEl.appendChild(divEl);
+
+    var divEl = document.querySelector(".other-five-days");
+    divEl.remove();
+
+    divEl=document.createElement("div");
+    divEl.className ="other-five-days";
+
+    weatherContainerEl.appendChild(divEl);
 }
 
 var getCityLatLon = function(cityName){
@@ -160,6 +191,10 @@ var getCityLatLon = function(cityName){
     .then(function (response) {
       if (response.ok) {
         response.json().then(function (data) {
+            if(data.length == 0){
+                noDataToDisplay();
+                return;
+            }
             lat = data[0].lat;
             lon = data[0].lon;
             getWeatherData(lat,lon, cityName);
@@ -176,21 +211,31 @@ var getCityLatLon = function(cityName){
 
 var displayCitySearchHistory = function() {
     //make html elements to display the list of cities in the search history
-    var divs = document.querySelector(".search-history-container div");
-    console.log(divs);
-    if(divs){
+    var buttons = Array.from(document.getElementsByClassName("search-hist-btn"));
+    console.log(buttons);
+    if(buttons){
+        
         //remove old search history
+        for(var i= 0; i < buttons.length; i++){
+            searchHistoryContainerEl.removeChild(buttons[i]);
+            console.log(buttons[i],buttons.length);
+        }  
+        
     }
+
     //put new search history in
-    for(var i = 0;i = searchHistory.length; i++){
+    for(var i = 0;i < searchHistory.length; i++){
         var buttonEl = document.createElement("button");
         buttonEl.textContent = searchHistory[i];
+        buttonEl.className = "search-hist-btn";
+        searchHistoryContainerEl.appendChild(buttonEl);
     }
 }
 
 var addCityToSearchHistory = function(city){
     //adds city name to list of searches.
     searchHistory.push(city);
+    console.log(searchHistory);
     displayCitySearchHistory();
 }
 
@@ -201,10 +246,9 @@ formEl.addEventListener("submit", function(event){
     addCityToSearchHistory(inputEl.value);
 });
 
-searchHistoryContainerEl.addEventListener("click",function(){
-    console.log("search history button clicked");
+searchHistoryContainerEl.addEventListener("click",function(event){
+    getCityLatLon(event.target.textContent.trim());
+    addCityToSearchHistory(event.target.textContent.trim());
 })
 
-
-//need to add an event listener for if a city in the search history is clicked.
 
