@@ -98,3 +98,19 @@ hr{
     color: white;
     background-color: blue;
 }
+
+.search-history-btn{
+    padding: 5px;
+    border-radius: 10px;
+    border: 3px solid black;
+    background-image: linear-gradient(to right,blue, turquoise);
+    transition: all 0.5s ease-in-out;
+    margin-top: 15px;
+    color: white;
+    font-size: 23px;
+    width: 100%;
+}
+
+.search-history-btn:hover{
+    background-image: linear-gradient(to right,darkblue, blue);
+}

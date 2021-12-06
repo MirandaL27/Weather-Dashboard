@@ -1,6 +1,7 @@
 var searchHistoryContainerEl = document.querySelector(".search-history-container");
 var weatherContainerEl = document.querySelector(".weather-container");
 var formEl = document.querySelector(".weather-form")
+var searchHistoryButtonContainerEl = document.querySelector(".search-history-button-container");
 //records search history
 var searchHistory = [];
 
@@ -19,6 +20,23 @@ class day {
 //used to hold weather data for the current day and five future days
 var days = [];
 
+var loadSearchHistory = function(){
+    var storage = localStorage.getItem("searches");
+    if(storage){
+        searchHistory = JSON.parse(storage);
+    }
+    displayCitySearchHistory();
+}
+
+var saveSearchHistory = function(){
+    localStorage.setItem("searches",JSON.stringify(searchHistory));
+}
+
+var clearSearchHistory = function(){
+    localStorage.removeItem("searches");
+    searchHistory.length = 0;
+    displayCitySearchHistory();
+}
 
 var getWeatherData = function(lat, lon, city){
     //the fetch request goes here! puts data into weather object.
@@ -236,6 +254,7 @@ var addCityToSearchHistory = function(city){
     //adds city name to list of searches.
     searchHistory.push(city);
     console.log(searchHistory);
+    saveSearchHistory();
     displayCitySearchHistory();
 }
 
@@ -251,4 +270,10 @@ searchHistoryContainerEl.addEventListener("click",function(event){
     addCityToSearchHistory(event.target.textContent.trim());
 })
 
+searchHistoryButtonContainerEl.addEventListener("click", function(event){
+    clearSearchHistory();
+});
+
+
+loadSearchHistory();
 
