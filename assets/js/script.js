@@ -80,6 +80,7 @@ var getWeatherData = function(lat, lon, city){
 }
 
 var getUIVBackgroundColor = function(severity){
+    //this function returns a background color based on the UVI severity
     if(severity === "Low"){
         return "green";
     }
@@ -91,7 +92,8 @@ var getUIVBackgroundColor = function(severity){
     }
 }
 var displayToday = function(){
-
+    //this function makes the html elements for today.
+    //remove today first 
     var divEl = document.querySelector(".today");
     divEl.remove();
 
@@ -99,6 +101,7 @@ var displayToday = function(){
     divEl.className ="today";
 
     divEl.style.display = "block";
+    //make the html elements inside the div
     var h2El = document.createElement("h2");
     h2El.textContent = days[0].cityName + " (" + days[0].date + ")";
     divEl.appendChild(h2El);
@@ -180,6 +183,7 @@ var displyWeatherData = function(){
 }
 
 var noDataToDisplay = function(){
+    //this function displays "No Data Found" if the request returns no data.
     var divEl = document.querySelector(".today");
     divEl.remove();
 
