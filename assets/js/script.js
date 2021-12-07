@@ -206,7 +206,7 @@ var noDataToDisplay = function(){
 var getCityLatLon = function(cityName){
     //get the city latitude nad longitude from the city name
     //need a fetch request for the data from the weather api
-    var weatherUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid=50f3b7bbc39633c0695f5b6b710ca954"
+    var weatherUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid=50f3b7bbc39633c0695f5b6b710ca954"
     var lat = 0;
     var lon = 0;
     fetch(weatherUrl)
